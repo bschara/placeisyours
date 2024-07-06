@@ -1,0 +1,44 @@
+.adminNavbar {
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* justify-content: space-between; */
+}
+
+.logo-image {
+  height: 100px;
+  width: 100px;
+}
+
+.linksPages {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  color: white;
+  padding: 3rem;
+  list-style-type: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.adminNavbar ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.adminNavbar ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.adminNavbar ul li a:hover {
+  cursor: pointer;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5); /* Shadow */
+  background-color: rgba(128, 128, 128, 0.5); /* Grey background */
+  padding: 0.5rem 1rem;
+  border-radius: 3rem;
+}

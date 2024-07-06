@@ -1,0 +1,64 @@
+/* .whole-comp {
+  display: flex;
+  flex-direction: row;
+}
+
+.shop-list ul {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  padding: 2rem;
+  list-style-type: none;
+} */
+
+.whole-comp {
+  display: flex;
+}
+
+.shop-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap between items as needed */
+  padding: 20px; /* Optional: Adjust padding as needed */
+  width: 100%;
+}
+
+.shop-list ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+.shop-list li {
+  flex: 1 0 21%; /* Adjust percentage to fit 4 items per row, with some margin */
+  display: flex;
+  justify-content: center;
+  margin: 10px; /* Optional: Adjust margin as needed */
+}
+
+@media (max-width: 768px) {
+  .whole-comp {
+    flex-direction: column;
+    /* padding: 1rem; */
+  }
+
+  .item-pod img {
+    height: 10rem;
+    width: 10rem;
+  }
+
+  .item-pod {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .sold-overlay {
+    font-size: 14px;
+  }
+  .shop-list {
+    padding: 0;
+  }
+}

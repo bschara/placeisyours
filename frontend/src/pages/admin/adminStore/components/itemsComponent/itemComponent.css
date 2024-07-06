@@ -1,0 +1,11 @@
+.whole-comp {
+  display: flex;
+  flex-direction: row;
+}
+
+.shop-list ul {
+  display: flex;
+  flex-direction: row;
+  gap: 3rem;
+  list-style-type: none;
+}
