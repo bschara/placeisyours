@@ -26,8 +26,6 @@ require("./app/routes/orders.routes")(app);
 require("./app/routes/items.routes")(app);
 require("./app/routes/mailing_list.routes")(app);
 
-app.use(express.static(path.join(__dirname + "/file_storage")));
-
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server is running on port ${PORT}`);

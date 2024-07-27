@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 import axios from "axios";
 import {
   Accordion,
@@ -10,6 +11,11 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import "./orderPod.css";
+
+const getFileName = (filePath) => {
+  const pathComponents = filePath.split("\\");
+  return pathComponents[pathComponents.length - 1];
+};
 
 const OrderItemAccordion = ({ order, isSelected, onSelect }) => (
   <Accordion>
@@ -25,10 +31,14 @@ const OrderItemAccordion = ({ order, isSelected, onSelect }) => (
       />
     </AccordionSummary>
     <AccordionDetails>
-      <div>
+      <div className="orders-pod">
         <p>Item Name: {order.itemName}</p>
         <p>Category: {order.category}</p>
-        <p>Main Image: {order.mainImage}</p>
+        <img
+          className="selected-image"
+          src={`http://192.168.1.9:8081/${getFileName(order.mainImage)}`}
+          alt={order.itemName}
+        />
         <p>Status: {order.status}</p>
         <p>Buyer Email: {order.buyerEmail}</p>
         <p>Buyer Phone Number: {order.buyerPhoneNumber}</p>
@@ -41,6 +51,12 @@ const OrderItemAccordion = ({ order, isSelected, onSelect }) => (
 );
 
 const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
+  const token = Cookies.get("authToken"); // Replace 'bearerToken' with the actual cookie name
+
+  const config = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+
   const [selectAll, setSelectAll] = useState(false);
   const [selectedOrders, setSelectedOrders] = useState({});
 
@@ -65,9 +81,13 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
     selectedOrderKeys.forEach((itemID) => {
       if (selectedOrders[itemID]) {
         axios
-          .put(`http://192.168.1.9:8081/api/orders/handleCancelOrder`, {
-            itemID: itemID,
-          })
+          .put(
+            `http://192.168.1.9:8081/api/orders/handleCancelOrder`,
+            {
+              itemID: itemID,
+            },
+            config
+          )
           .then((response) => {
             console.log(response.data);
           })
@@ -92,9 +112,13 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
 
   const handlePlaceOrderProc = (itemID) => {
     axios
-      .put(`http://192.168.1.9:8081/api/orders/handlePendingProcessing`, {
-        itemID: itemID,
-      })
+      .put(
+        `http://192.168.1.9:8081/api/orders/handlePendingProcessing`,
+        {
+          itemID: itemID,
+        },
+        config
+      )
       .then((response) => {
         console.log(response.data);
       })
@@ -105,9 +129,13 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
 
   const handlePlaceOrderPay = (itemID) => {
     axios
-      .put(`http://192.168.1.9:8081/api/orders/handlePendingPayment`, {
-        itemID: itemID,
-      })
+      .put(
+        `http://192.168.1.9:8081/api/orders/handlePendingPayment`,
+        {
+          itemID: itemID,
+        },
+        config
+      )
       .then((response) => {
         console.log(response.data);
       })

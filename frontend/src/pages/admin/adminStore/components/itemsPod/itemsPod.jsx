@@ -1,33 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-// import "./itemPod.css";
+import "./itemPod.css";
 
-const ItemPod = ({ item }) => {
-  const placeOrder = () => {};
-
-  const deleteOrder = () => {};
-
-  const filePath = item.mainImage;
-  const pathComponents = filePath.split("\\");
-  const fileName = pathComponents[pathComponents.length - 1];
-
-  console.log(fileName);
-
+const ItemPod = ({ item, onDelete, onChangeStatus }) => {
   return (
-    <div className="item-pod">
-      <Link to={`/itemsDetails/${item.ID}`} className="item-link">
-        <div className="item-podd">
-          <img
-            img
-            src={`http://192.168.1.9:8081/${fileName}`}
-            alt={item.itemName}
-          />
-          <p>Price: ${item.price}</p>
-          <p>{item.itemName}</p>
-        </div>
-      </Link>
-      <button onClick={placeOrder}>place Order</button>
-      <button onClick={deleteOrder}>Delete Item</button>
+    <div className="whole-pod">
+      <div className={`item-pod ${item.status === "sold" ? "sold" : ""}`}>
+        <img src={item.mainImageUrl} alt={item.itemName} /> <p>{item.size}</p>
+        <p>${item.price}</p>
+        {item.status === "sold" && <div className="sold-overlay">Sold</div>}
+        <button onClick={() => onDelete(item.ID)}>Delete</button>
+        <button onClick={() => onChangeStatus(item.ID)}>Change Status</button>
+      </div>
     </div>
   );
 };

@@ -29,19 +29,11 @@ import { Link } from "react-router-dom";
 import "./itemPod.css";
 
 const ItemPod = ({ item }) => {
-  const filePath = item.mainImage;
-  const pathComponents = filePath.split("\\");
-  const fileName = pathComponents[pathComponents.length - 1];
-
   return (
     <div className="whole-pod">
       <Link to={`/itemsDetails/${item.ID}`} className="itemBorders">
         <div className={`item-pod ${item.status === "sold" ? "sold" : ""}`}>
-          <img
-            src={`http://192.168.1.9:8081/${fileName}`}
-            alt={item.itemName}
-          />{" "}
-          <p>{item.size}</p>
+          <img src={item.mainImageUrl} alt={item.itemName} /> <p>{item.size}</p>
           <p>${item.price}</p>
           {item.status === "sold" && <div className="sold-overlay">Sold</div>}
         </div>

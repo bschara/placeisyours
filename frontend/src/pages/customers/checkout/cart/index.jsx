@@ -29,14 +29,9 @@ const CartIcon = () => {
       {showDropdown && (
         <div className="cart-dropdown">
           {cart.map((item) => {
-            const filePath = item.image;
-            const pathComponents = filePath.split("\\");
-            const fileName = pathComponents[pathComponents.length - 1];
-            const imageUrl = `http://192.168.1.9:8081/${fileName}`;
-
             return (
               <div key={item.id} className="cart-item">
-                <img src={imageUrl} alt={item.itemName} />
+                <img src={item.image} alt={item.itemName} />
                 <span>{item.itemName}</span>
                 <button onClick={() => removeItem(item.id)}>Remove</button>
               </div>

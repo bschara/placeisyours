@@ -40,11 +40,26 @@ body {
   display: flex;
   justify-content: flex-end;
   margin-right: 0.5rem;
+  animation: none !important;
+}
+
+.cart-image {
+  width: 80px;
 }
 
 .logo-image {
   display: flex;
   justify-content: flex-start;
+  animation: spin 12s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .customerNavbar ul li a:hover {
@@ -63,7 +78,7 @@ body {
       "logo cart"
       "nav nav";
     align-items: center;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .logo-image {
@@ -75,11 +90,11 @@ body {
   }
 
   .cart-icon {
-    margin-top: 0.2rem;
+    margin-top: 0.3rem;
     grid-area: cart;
     justify-self: end;
     max-height: 4rem;
-    max-width: 4rem;
+    max-width: 2.5rem;
   }
 
   .nav-links {
@@ -92,6 +107,7 @@ body {
   }
 
   .nav-links li {
-    margin: 0 0.3rem;
+    margin: 0 0;
+    gap: 0;
   }
 }

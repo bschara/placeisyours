@@ -1,25 +1,27 @@
-const upload = require("../config/multer-config");
+const verifyToken = require("../middleware/token-middlware");
 
 module.exports = (app) => {
   const items = require("../controllers/items.controller");
 
   const router = require("express").Router();
 
-  // router.post("/", upload.array("mainImage", 4), items.create);
-  router.post(
-    "/",
-    upload.fields([
-      { name: "mainImage", maxCount: 1 },
-      { name: "images", maxCount: 3 },
-    ]),
-    items.create
-  );
+  router.post("/", verifyToken, items.create);
+
+  router.post("/createSpecialItem", verifyToken, items.createSpecialItem);
+
+  router.get("/findSpecialItem", items.findSpecialItem);
+
+  router.get("/findSpecialItemById/:id", items.findSpecialItemByID);
 
   router.get("/", items.findAll);
 
-  router.get("/itemById", items.findById);
+  router.get("/:category", items.findItemsByCategory);
 
-  router.put("/updateItemStatus", items.updateStatus);
+  router.get("/itemById/:id", items.findById);
+
+  router.put("/updateItemStatus/:id", verifyToken, items.updateStatus);
+
+  router.delete("/:id", verifyToken, items.delete);
 
   app.use("/api/items", router);
 };

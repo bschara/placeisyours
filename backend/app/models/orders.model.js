@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { type } = require("os");
 
 module.exports = (mongoose) => {
   const Orders = mongoose.Schema(
@@ -33,13 +34,17 @@ module.exports = (mongoose) => {
 
       buyerEmail: {
         type: String,
-        required: true,
+        required: false,
       },
       buyerPhoneNumber: {
         type: String,
         required: true,
       },
       buyerFullName: {
+        type: String,
+        required: true,
+      },
+      buyerLocation: {
         type: String,
         required: true,
       },

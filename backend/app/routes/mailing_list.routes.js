@@ -1,3 +1,5 @@
+const verifyToken = require("../middleware/token-middlware");
+
 module.exports = (app) => {
   const mailingList = require("../controllers/mailing_list.controller");
 
@@ -5,7 +7,7 @@ module.exports = (app) => {
 
   router.post("/", mailingList.addEmail);
 
-  router.get("/", mailingList.getAllEmails);
+  router.get("/", verifyToken, mailingList.getAllEmails);
 
   router.delete("/", mailingList.removeEmail);
 

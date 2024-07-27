@@ -1,0 +1,10 @@
+.admin-sidebar {
+  padding: 2rem;
+  background-color: #f4f4f4;
+  border-right: 1px solid #ccc;
+  font-family: "CustomFont", sans-serif;
+  font-size: 2rem;
+}
+.admin-sidebar ul {
+  list-style: none;
+}

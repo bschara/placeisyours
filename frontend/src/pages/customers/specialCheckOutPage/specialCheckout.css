@@ -1,0 +1,230 @@
+body {
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+.checkout-page {
+  /* background: url("../../../../assets/ayre-aub.jpeg") no-repeat center center;
+  height: 100vh; */
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.checkout-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.items ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.items li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 10px 10px;
+}
+
+.checkout-container img {
+  width: 300px;
+  height: 300px;
+  margin-right: 1rem;
+  border-radius: 0.5rem;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1rem;
+  font-family: "CustomFont", sans-serif;
+  font-size: 2rem;
+  width: 100%;
+  padding: 1rem;
+}
+
+.input-fields h1 {
+  margin-bottom: 10px;
+  font-size: 2rem;
+
+  color: #333;
+}
+
+.input-fields p {
+  font-size: 2rem;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #333;
+}
+
+.form-group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.submit-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease;
+}
+
+.submit-button:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 768px) {
+  body {
+    background: #f7f7f7;
+    margin: 0;
+    padding: 0;
+  }
+
+  .checkout-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background: none;
+  }
+
+  .checkout-container {
+    background: none;
+    border-radius: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0rem;
+    max-width: none;
+    background: none;
+  }
+
+  .items ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1rem;
+  }
+
+  .items li {
+    margin: 0;
+    font-family: "CustomFont", sans-serif;
+  }
+
+  .checkout-container img {
+    width: 160px;
+    height: 160px;
+    margin-right: 0rem;
+    border-radius: 0.5rem;
+  }
+  .checkout-container h1 {
+    font-family: "CustomFont", sans-serif;
+    font-size: 3rem;
+    color: rgb(178, 31, 31);
+  }
+
+  .input-fields {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    font-family: "CustomFont", sans-serif;
+    font-size: 1.5rem;
+    width: 100%;
+    padding: 0;
+    color: black;
+  }
+
+  .input-fields h1 {
+    font-size: 2rem;
+    color: black;
+  }
+
+  .input-fields p {
+    font-size: 1.5rem;
+    /* color: #333; */
+    color: black;
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .submit-button {
+    background: black;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+  }
+
+  .submit-button:hover {
+    background: #0056b3;
+  }
+}

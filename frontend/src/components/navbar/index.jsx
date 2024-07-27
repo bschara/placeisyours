@@ -8,12 +8,14 @@ const CustomerNavbar = () => {
   return (
     <nav className="customerNavbar">
       <div className="logo-image">
-        <Logo />
+        <NavLink to="/drops_page" className="active">
+          <Logo />
+        </NavLink>
       </div>
       <ul className="nav-links">
         <li>
           <NavLink to="/" className="active">
-            Home Page
+            Home
           </NavLink>
         </li>
         <li>
@@ -24,6 +26,11 @@ const CustomerNavbar = () => {
         <li>
           <NavLink to="/aboutPage" className="active">
             About
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dreamPage" className="active">
+            ?
           </NavLink>
         </li>
       </ul>

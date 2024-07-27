@@ -1,0 +1,66 @@
+.dream-page {
+  background: url("../../../assets/robert-tudor-G7bXcUgh_xk-unsplash.jpg")
+    no-repeat center center;
+  overflow: scroll;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: "CustomFont", sans-serif;
+  font-size: 2rem;
+}
+
+.container {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 2rem;
+  gap: 2rem;
+  text-align: center;
+}
+
+.container button {
+  width: 50%;
+  background-color: black;
+}
+.container input {
+  width: 50%;
+}
+.remark {
+  font-size: 1.3rem;
+}
+
+@media (max-width: 768px) {
+  .dream-page {
+    background: url("../../../assets/upscaled.jpg") no-repeat center center;
+    height: auto;
+    width: auto;
+    overflow: scroll;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "CustomFont", sans-serif;
+    font-size: 1.3rem;
+  }
+
+  .container {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    gap: 2rem;
+    text-align: center;
+    width: 75%;
+  }
+
+  .container button {
+    background-color: black;
+    width: 100%;
+  }
+  .container input {
+    width: 100%;
+  }
+
+  .remark {
+    font-size: 1rem;
+  }
+}

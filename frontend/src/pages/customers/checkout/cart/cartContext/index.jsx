@@ -17,7 +17,7 @@ export const CartProvider = ({ children }) => {
         id: item.ID,
         itemName: item.itemName,
         price: item.price,
-        image: item.mainImage,
+        image: item.mainImageUrl,
       };
       setCart([...cart, cartItem]);
       alert("item added to cart ");

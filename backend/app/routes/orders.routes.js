@@ -1,29 +1,54 @@
+const createOrderLimiter = require("../middleware/limiter");
+const verifyToken = require("../middleware/token-middlware");
+
 module.exports = (app) => {
   const orders = require("../controllers/orders.controller");
 
   const router = require("express").Router();
 
-  // Create a new Order
-  router.post("/", orders.create);
+  router.post("/", createOrderLimiter, orders.create);
 
-  //get all orders (no conditions)
-  router.get("/", orders.findAll);
+  router.post("/specialOrder", createOrderLimiter, orders.createSpecialItem);
 
-  router.get("/orderByPhoneNumber", orders.findOrdersByPhoneNumber);
+  router.get("/", verifyToken, orders.findAll);
 
-  router.get("/orderByFullName", orders.findOrdersByFullName);
+  router.get(
+    "/orderByPhoneNumber",
+    verifyToken,
+    orders.findOrdersByPhoneNumber
+  );
 
-  router.get("/orderByEmail", orders.findOrdersByEmail);
+  router.get("/orderByFullName", verifyToken, orders.findOrdersByFullName);
 
-  router.get("/ordersPendingProcessing", orders.findOrdersPendingProcessing);
+  router.get("/orderByEmail", verifyToken, orders.findOrdersByEmail);
 
-  router.get("/ordersPendingPayment", orders.findOrdersPendingPayment);
+  router.get(
+    "/ordersPendingProcessing",
+    verifyToken,
+    orders.findOrdersPendingProcessing
+  );
 
-  router.put("/handlePendingPayment", orders.handlePendingPayment);
+  router.get(
+    "/ordersPendingPayment",
+    verifyToken,
+    orders.findOrdersPendingPayment
+  );
 
-  router.put("/handlePendingProcessing", orders.handlePendingProcessing);
+  router.put("/handlePendingPayment", verifyToken, orders.handlePendingPayment);
 
-  router.put("/handleCancelOrder", orders.handleCancel);
+  router.put(
+    "/handlePendingProcessing",
+    verifyToken,
+    orders.handlePendingProcessing
+  );
+
+  router.put("/handleCancelOrder", verifyToken, orders.handleCancel);
+
+  router.put(
+    "/handleSpecialCancelOrder",
+    verifyToken,
+    orders.handleSpecialCancel
+  );
 
   app.use("/api/orders", router);
 };

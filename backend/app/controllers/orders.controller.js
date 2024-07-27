@@ -1,51 +1,213 @@
 const db = require("../models");
 const Order = db.orders;
+const Item = db.items;
+const specialOrder = db.specialOrder;
 const uuid = require("uuid");
+const mongoose = require("mongoose");
+const axios = require("axios");
+const { verifyRecaptcha } = require("../utils/recaptcha-operations");
 
-// Create and Save a new Tutorial
-exports.create = (req, res) => {
-  // Validate request
+// exports.create = async (req, res) => {
+//   if (
+//     !req.body.itemName ||
+//     !req.body.category ||
+//     !req.body.mainImage ||
+//     !req.body.buyerEmail ||
+//     !req.body.buyerPhoneNumber ||
+//     !req.body.itemPrice ||
+//     !req.body.buyerFullName ||
+//     !req.body.buyerLocation
+//   ) {
+//     res.status(400).send({ message: "All fields are required!" });
+//     return;
+//   }
+
+//   const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
+
+//   if (!isRecaptchaValid) {
+//     return res.status(400).send({ message: "reCAPTCHA verification failed." });
+//   }
+
+//   const id = uuid.v4();
+
+//   // Create an Order
+//   const order = new Order({
+//     id: id,
+//     itemName: req.body.itemName,
+//     category: req.body.category,
+//     mainImage: req.body.mainImage,
+//     buyerEmail: req.body.buyerEmail,
+//     buyerPhoneNumber: req.body.buyerPhoneNumber,
+//     buyerFullName: req.body.buyerFullName,
+//     buyerLocation: req.body.buyerLocation,
+//     itemPrice: req.body.itemPrice,
+//     itemID: req.body.itemID,
+//   });
+
+//   // Save Order in the database
+//   order
+//     .save()
+//     .then((data) => {
+//       res.send(data);
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: err.message || "Some error occurred while creating the Order.",
+//       });
+//     });
+// };
+// Retrieve all Orders from the database.
+
+exports.create = async (req, res) => {
   if (
     !req.body.itemName ||
     !req.body.category ||
     !req.body.mainImage ||
-    !req.body.buyerEmail ||
     !req.body.buyerPhoneNumber ||
     !req.body.itemPrice ||
-    !req.body.buyerFullName
+    !req.body.buyerFullName ||
+    !req.body.buyerLocation ||
+    !req.body.itemID
   ) {
-    res.status(400).send({ message: "All fields are required!" });
-    return;
+    return res.status(400).send({ message: "All fields are required!" });
   }
 
-  const id = uuid.v4();
+  const recaptchaToken = req.body.recaptchaToken;
+  const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
 
-  // Create an Order
-  const order = new Order({
-    id: id,
-    itemName: req.body.itemName,
-    category: req.body.category,
-    mainImage: req.body.mainImage,
-    buyerEmail: req.body.buyerEmail,
-    buyerPhoneNumber: req.body.buyerPhoneNumber,
-    buyerFullName: req.body.buyerFullName,
-    itemPrice: req.body.itemPrice,
-    itemID: req.body.itemID,
-  });
+  if (!isRecaptchaValid) {
+    return res.status(400).send({ message: "reCAPTCHA verification failed." });
+  }
 
-  // Save Order in the database
-  order
-    .save()
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: err.message || "Some error occurred while creating the Order.",
-      });
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const id = uuid.v4();
+
+    const order = new Order({
+      id: id,
+      itemName: req.body.itemName,
+      category: req.body.category,
+      mainImage: req.body.mainImage,
+      buyerEmail: req.body.buyerEmail,
+      buyerPhoneNumber: req.body.buyerPhoneNumber,
+      buyerFullName: req.body.buyerFullName,
+      buyerLocation: req.body.buyerLocation,
+      itemPrice: req.body.itemPrice,
+      itemID: req.body.itemID,
     });
+
+    await order.save({ session });
+
+    const itemId = req.body.itemID;
+    await Item.findByIdAndUpdate(itemId, { status: "sold" }, { session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).send(order);
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error(err);
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Order.",
+    });
+  }
 };
-// Retrieve all Orders from the database.
+
+exports.createSpecialItem = async (req, res) => {
+  if (
+    !req.body.itemName ||
+    !req.body.category ||
+    !req.body.mainImage ||
+    !req.body.buyerPhoneNumber ||
+    !req.body.itemPrice ||
+    !req.body.buyerFullName ||
+    !req.body.buyerLocation ||
+    !req.body.itemID ||
+    !req.body.size
+  ) {
+    return res.status(400).send({ message: "All fields are required!" });
+  }
+
+  const recaptchaToken = req.body.recaptchaToken;
+  const isRecaptchaValid = await verifyRecaptcha(recaptchaToken);
+
+  if (!isRecaptchaValid) {
+    return res.status(400).send({ message: "reCAPTCHA verification failed." });
+  }
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const id = uuid.v4();
+
+    const order = new specialOrder({
+      id: id,
+      itemName: req.body.itemName,
+      category: req.body.category,
+      mainImage: req.body.mainImage,
+      buyerEmail: req.body.buyerEmail,
+      buyerPhoneNumber: req.body.buyerPhoneNumber,
+      buyerFullName: req.body.buyerFullName,
+      buyerLocation: req.body.buyerLocation,
+      itemPrice: req.body.itemPrice,
+      itemID: req.body.itemID,
+      itemSize: req.body.size,
+    });
+
+    await order.save({ session });
+
+    const itemId = req.body.itemID;
+    const size = req.body.size;
+
+    const specialItem = await specialItem
+      .findOne({ ID: itemId })
+      .session(session);
+
+    if (!specialItem) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({ message: "Special Item not found" });
+    }
+
+    const sizeAndQuantity = specialItem.sizeAndQuantity.find(
+      (sq) => sq.size === size
+    );
+    if (!sizeAndQuantity) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({ message: "Size not found" });
+    }
+
+    if (sizeAndQuantity.quantity < 1) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(400).send({ message: "Not enough quantity available" });
+    }
+
+    sizeAndQuantity.quantity -= 1;
+    await specialItem.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.status(201).send(order);
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+
+    console.error(err);
+    res.status(500).send({
+      message: err.message || "Some error occurred while creating the Order.",
+    });
+  }
+};
+
 exports.findAll = (req, res) => {
   Order.find()
     .then((data) => {
@@ -58,7 +220,6 @@ exports.findAll = (req, res) => {
     });
 };
 
-// Find all Orders with a phone number
 exports.findOrdersByPhoneNumber = (req, res) => {
   const phoneNumber = req.query.phoneNumber;
 
@@ -77,7 +238,6 @@ exports.findOrdersByPhoneNumber = (req, res) => {
     });
 };
 
-// Update a Tutorial by the id in the request
 exports.update = (req, res) => {
   if (!req.body) {
     return res.status(400).send({
@@ -102,7 +262,6 @@ exports.update = (req, res) => {
     });
 };
 
-// Find all orders pending payment
 exports.findOrdersPendingPayment = (req, res) => {
   Order.find({ status: "pending_payment" })
     .then((data) => {
@@ -117,7 +276,6 @@ exports.findOrdersPendingPayment = (req, res) => {
     });
 };
 
-// Find all orders pending processing
 exports.findOrdersPendingProcessing = (req, res) => {
   Order.find({ status: "pending_processing" })
     .then((data) => {
@@ -132,7 +290,6 @@ exports.findOrdersPendingProcessing = (req, res) => {
     });
 };
 
-// Delete a Tutorial with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -155,7 +312,6 @@ exports.delete = (req, res) => {
     });
 };
 
-// Delete all Tutorials from the database.
 exports.deleteAll = (req, res) => {
   Order.deleteMany({})
     .then((data) => {
@@ -171,7 +327,6 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// Find all published Tutorials
 exports.findOrdersByFullName = (req, res) => {
   const fullName = req.query.fullName;
 
@@ -230,7 +385,6 @@ exports.handlePendingPayment = (req, res) => {
     });
 };
 
-// Change status of an order to completed
 exports.handlePendingProcessing = (req, res) => {
   const itemID = req.body.itemID;
 
@@ -253,28 +407,141 @@ exports.handlePendingProcessing = (req, res) => {
     });
 };
 
-exports.handleCancel = (req, res) => {
+// exports.handleCancel = (req, res) => {
+//   const itemID = req.body.itemID;
+
+//   Order.findOneAndUpdate(
+//     { itemID: itemID },
+//     { status: "canceled" },
+//     { useFindAndModify: false, new: true }
+//   )
+//     .then((data) => {
+//       if (!data) {
+//         res.status(404).send({
+//           message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
+//         });
+//       } else res.send({ message: "Order status updated to canceled." });
+//     })
+//     .catch((err) => {
+//       res.status(500).send({
+//         message: "Error updating Order with itemID=" + itemID,
+//       });
+//     });
+// };
+//
+
+exports.handleCancel = async (req, res) => {
   const itemID = req.body.itemID;
 
-  Order.findOneAndUpdate(
-    { itemID: itemID },
-    { status: "canceled" },
-    { useFindAndModify: false, new: true }
-  )
-    .then((data) => {
-      if (!data) {
-        res.status(404).send({
-          message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
-        });
-      } else res.send({ message: "Order status updated to canceled." });
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message: "Error updating Order with itemID=" + itemID,
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const orderUpdate = await Order.findOneAndUpdate(
+      { itemID: itemID },
+      { status: "canceled" },
+      { useFindAndModify: false, new: true, session }
+    );
+
+    if (!orderUpdate) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({
+        message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
       });
+    }
+
+    const itemUpdate = await Item.findOneAndUpdate(
+      { _id: itemID },
+      { status: "available" },
+      { useFindAndModify: false, new: true, session }
+    );
+
+    if (!itemUpdate) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({
+        message: `Cannot update Item with itemID=${itemID}. Maybe Item was not found!`,
+      });
+    }
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.send({
+      message:
+        "Order status updated to canceled and Item status updated to available.",
     });
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).send({
+      message: "Error updating Order or Item with itemID=" + itemID,
+      error: err.message,
+    });
+  }
 };
 
-exports.hello = (req, res) => {
-  return res.json("hello user");
+exports.handleSpecialCancel = async (req, res) => {
+  const itemID = req.body.itemID;
+  const itemSize = req.body.itemSize; // Ensure this is passed in the request body
+
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    // Find and update the order status to "canceled"
+    const orderUpdate = await SpecialOrder.findOneAndUpdate(
+      { itemID: itemID },
+      { status: "canceled" },
+      { new: true, session }
+    );
+
+    if (!orderUpdate) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({
+        message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
+      });
+    }
+
+    // Find the item and update its quantity
+    const item = await SpecialItem.findOne({ ID: itemID }).session(session);
+
+    if (!item) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({
+        message: `Cannot find Item with itemID=${itemID}. Maybe Item was not found!`,
+      });
+    }
+
+    const sizeAndQuantity = item.sizeAndQuantity.find(
+      (sq) => sq.size === itemSize
+    );
+
+    if (!sizeAndQuantity) {
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).send({ message: "Size not found" });
+    }
+
+    sizeAndQuantity.quantity += 1; // Increment the quantity
+
+    await item.save({ session });
+
+    await session.commitTransaction();
+    session.endSession();
+
+    res.send({
+      message: "Order status updated to canceled and Item quantity updated.",
+    });
+  } catch (err) {
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).send({
+      message: "Error updating Order or Item with itemID=" + itemID,
+      error: err.message,
+    });
+  }
 };

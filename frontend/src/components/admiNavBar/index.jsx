@@ -22,6 +22,11 @@ const AdminNavbar = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/adminPostSpecialItems" className="active">
+              Post Special Items
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/handleOrders" className="active">
               Handle Orders
             </NavLink>

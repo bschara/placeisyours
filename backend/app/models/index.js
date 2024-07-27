@@ -10,5 +10,7 @@ db.users = require("./users.model.js")(mongoose);
 db.orders = require("./orders.model.js")(mongoose);
 db.items = require("./items.model.js")(mongoose);
 db.mailing_list = require("./mailingList.model.js")(mongoose);
+db.sItem = require("./sItem.model.js")(mongoose);
+db.specialOrder = require("./specialOrders.model.js");
 
 module.exports = db;

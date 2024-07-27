@@ -77,3 +77,13 @@
   /* color: #666; */
   color: black;
 }
+
+@media (max-width: 768px) {
+  .about-container p {
+    font-size: 1rem;
+  }
+
+  .refund-title h1 {
+    font-size: 2.2rem;
+  }
+}
