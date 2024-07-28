@@ -4,9 +4,27 @@ import "./dreamPage.css";
 
 const DreamPage = () => {
   const [answer, setAnswer] = useState("");
-  const [email, setEmail] = useState("");
 
-  const handleSubmit = () => {};
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://192.168.1.9:8081/api/answers/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ answer }),
+      });
+
+      if (response.ok) {
+        alert("answer received!");
+      } else {
+        alert("you have made too many requests ");
+      }
+    } catch (error) {
+      alert("error", error);
+    }
+  };
 
   return (
     <>
@@ -14,8 +32,8 @@ const DreamPage = () => {
       <div className="dream-page">
         <div className="container">
           <p>
-            Tell us what your dream is, we'll ask you about it 1 year from now.
-            These next 5 months are yours.
+            Tell us what your dream is, we'll ask you about it at the end of the
+            year. These next 5 months are yours.
           </p>
           <input
             type="text"
@@ -23,7 +41,7 @@ const DreamPage = () => {
             onChange={(e) => setAnswer(e.target.value)}
             placeholder="Enter your dream"
           />
-          <button>Submit</button>
+          <button onClick={handleSubscribe}>Submit</button>
           <div className="remark">
             <p>*leave your info at the end to contact you</p>
           </div>

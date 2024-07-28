@@ -1,10 +1,11 @@
 .dream-page {
-  background: url("../../../assets/robert-tudor-G7bXcUgh_xk-unsplash.jpg")
-    no-repeat center center;
+  background: url("../../../assets/people.jpeg") no-repeat center center;
+  height: 100vh;
+  width: 100%;
   overflow: scroll;
   background-size: cover;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   padding: 2rem;
   font-family: "CustomFont", sans-serif;
@@ -12,6 +13,7 @@
 }
 
 .container {
+  margin-top: 2rem;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   padding: 2rem;
@@ -45,6 +47,7 @@
   }
 
   .container {
+    margin-top: 0;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     gap: 2rem;

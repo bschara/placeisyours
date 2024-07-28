@@ -36,7 +36,7 @@ const OrderItemAccordion = ({ order, isSelected, onSelect }) => (
         <p>Category: {order.category}</p>
         <img
           className="selected-image"
-          src={`http://192.168.1.9:8081/${getFileName(order.mainImage)}`}
+          src={order.mainImage}
           alt={order.itemName}
         />
         <p>Status: {order.status}</p>
@@ -45,6 +45,7 @@ const OrderItemAccordion = ({ order, isSelected, onSelect }) => (
         <p>Buyer Full Name: {order.buyerFullName}</p>
         <p>Item Price: {order.itemPrice}</p>
         <p>Item ID: {order.itemID}</p>
+        <p>Item Size: {order.itemSize ? order.itemSize : "no size"}</p>
       </div>
     </AccordionDetails>
   </Accordion>
@@ -80,32 +81,61 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
     const selectedOrderKeys = Object.keys(selectedOrders);
     selectedOrderKeys.forEach((itemID) => {
       if (selectedOrders[itemID]) {
-        axios
-          .put(
-            `http://192.168.1.9:8081/api/orders/handleCancelOrder`,
-            {
-              itemID: itemID,
-            },
-            config
-          )
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            console.error("There was an error canceling the order!", error);
-          });
+        const order = orders.find((order) => order.itemID === itemID);
+        if (order.category === "sDrop") {
+          handleSpecialDeleteOrder(itemID, order.itemSize);
+        } else {
+          handleDeleteOrder(itemID);
+        }
       }
     });
   };
 
+  const handleDeleteOrder = (itemID) => {
+    axios
+      .put(
+        `http://192.168.1.9:8081/api/orders/handleCancelOrder`,
+        { itemID: itemID },
+        config
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the order!", error);
+      });
+  };
+
+  const handleSpecialDeleteOrder = (itemID, itemSize) => {
+    axios
+      .put(
+        `http://192.168.1.9:8081/api/orders/handleSpecialCancelOrder`,
+        { itemID: itemID, itemSize: itemSize },
+        config
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error deleting the special order!", error);
+      });
+  };
   const handlePlaceOrders = () => {
     const selectedOrderKeys = Object.keys(selectedOrders);
     selectedOrderKeys.forEach((itemID) => {
       const order = orders.find((order) => order.itemID === itemID);
-      if (order.status === "pending_payment") {
-        handlePlaceOrderPay(itemID);
+      if (order.category === "sDrop") {
+        if (order.status === "pending_payment") {
+          handleSpecialPlaceOrderPay(itemID);
+        } else {
+          handleSpecialPlaceOrderProc(itemID);
+        }
       } else {
-        handlePlaceOrderProc(itemID);
+        if (order.status === "pending_payment") {
+          handlePlaceOrderPay(itemID);
+        } else {
+          handlePlaceOrderProc(itemID);
+        }
       }
     });
   };
@@ -131,6 +161,40 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
     axios
       .put(
         `http://192.168.1.9:8081/api/orders/handlePendingPayment`,
+        {
+          itemID: itemID,
+        },
+        config
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error placing the order!", error);
+      });
+  };
+
+  const handleSpecialPlaceOrderProc = (itemID) => {
+    axios
+      .put(
+        `http://192.168.1.9:8081/api/orders/handleSpecialPendingProcessing`,
+        {
+          itemID: itemID,
+        },
+        config
+      )
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("There was an error processing the order!", error);
+      });
+  };
+
+  const handleSpecialPlaceOrderPay = (itemID) => {
+    axios
+      .put(
+        `http://192.168.1.9:8081/api/orders/handleSpecialPendingPayment`,
         {
           itemID: itemID,
         },

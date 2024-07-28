@@ -5,9 +5,6 @@ body {
 }
 
 .checkout-page {
-  /* background: url("../../../../assets/ayre-aub.jpeg") no-repeat center center;
-  height: 100vh; */
-  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,11 +16,16 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: row;
-  padding: 1rem;
+  flex-direction: column;
   max-width: 800px;
   width: 100%;
   text-align: center;
+}
+
+.checkout-container h1 {
+  color: rgb(178, 31, 31);
+  font-family: "CustomFont", sans-serif;
+  font-size: 4rem;
 }
 
 .items ul {
@@ -37,25 +39,26 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 10px 10px;
 }
 
 .checkout-container img {
   width: 300px;
   height: 300px;
-  margin-right: 1rem;
   border-radius: 0.5rem;
 }
 
 .input-fields {
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
   gap: 1rem;
   font-family: "CustomFont", sans-serif;
   font-size: 2rem;
   width: 100%;
-  padding: 1rem;
+}
+.input-fields p {
+  text-align: center;
 }
 
 .input-fields h1 {
@@ -95,7 +98,8 @@ body {
 }
 
 .submit-button {
-  background: #007bff;
+  background: black;
+  font-weight: bold;
   color: white;
   border: none;
   padding: 15px;
@@ -226,5 +230,8 @@ body {
 
   .submit-button:hover {
     background: #0056b3;
+  }
+  .delivery-text p {
+    font-size: 1.2rem;
   }
 }

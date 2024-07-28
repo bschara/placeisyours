@@ -87,14 +87,16 @@ body {
     justify-self: start;
     max-height: 4rem;
     max-width: 4rem;
+    margin-left: 0.5rem;
   }
 
   .cart-icon {
     margin-top: 0.3rem;
     grid-area: cart;
     justify-self: end;
-    max-height: 4rem;
-    max-width: 2.5rem;
+    height: 4rem;
+    width: 2rem;
+    margin-right: 0;
   }
 
   .nav-links {

@@ -36,6 +36,11 @@ const AdminNavbar = () => {
               Admin Store
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/adminDreamPage" className="active">
+              Dream Page
+            </NavLink>
+          </li>
         </div>
       </ul>
     </nav>

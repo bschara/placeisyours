@@ -84,6 +84,17 @@
   transition: background-color 0.3s, color 0.3s;
 }
 
+.size-option.selected {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.size-option:hover {
+  background-color: black;
+  color: white;
+}
+
 @media (max-width: 768px) {
   .drops-page {
     display: flex;

@@ -13,7 +13,7 @@ const SpecialCheckoutPage = () => {
   const [item, setItem] = useState(null);
   const [cost, setCost] = useState(0);
   const [recaptchaToken, setRecaptchaToken] = useState("");
-  const delivery = "delivery is calculated based on location";
+  const delivery = "*delivery is calculated based on location";
 
   const queryParams = new URLSearchParams(location.search);
   const itemId = queryParams.get("items");
@@ -78,7 +78,6 @@ const SpecialCheckoutPage = () => {
     <div className="checkout-page">
       <div className="checkout-container">
         <h1>Checkout</h1>
-
         {item && (
           <div className="item">
             <img src={item.mainImageUrl} alt={item.itemName} />
@@ -89,7 +88,9 @@ const SpecialCheckoutPage = () => {
             {" "}
             ${cost}, {size}
           </p>
-          <p>{delivery}</p>
+          <div className="delivery-text">
+            <p>{delivery}</p>
+          </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label>Full Name</label>

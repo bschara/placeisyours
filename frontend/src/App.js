@@ -12,12 +12,12 @@ import Dashboard from "./pages/admin/dashboard/index.jsx";
 import HomePage from "./pages/customers/home/index.jsx";
 import AboutPage from "./pages/customers/about/index.jsx";
 import CheckOutPage from "./pages/customers/checkout/checkoutPage/index.jsx";
-import AdminPlaceOrder from "./pages/admin/adminPlaceOrder/index.jsx";
 import { CartProvider } from "./pages/customers/checkout/cart/cartContext/index.jsx";
 import DreamPage from "./pages/customers/dreamPage/index.jsx";
 import DropsPage from "./pages/customers/drops_page/index.jsx";
 import PostSpecialItemsPage from "./pages/admin/specialPostItems/index.jsx";
 import SpecialCheckoutPage from "./pages/customers/specialCheckOutPage/index.jsx";
+import AdminDreamPage from "./pages/admin/adminDreamPage/index.jsx";
 
 function App() {
   return (
@@ -37,11 +37,11 @@ function App() {
           <Route path="/handleOrders" element={<HandleOrders />} />
           <Route path="/adminStore" element={<AdminStorePage />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/adminPlaceOrder" element={<AdminPlaceOrder />} />
           <Route path="/checkout" element={<CheckOutPage />} />
           <Route path="/dreamPage" element={<DreamPage />} />
           <Route path="/drops_page" element={<DropsPage />} />
           <Route path="/adminLogin" element={<LoginPage />} />
+          <Route path="/adminDreamPage" element={<AdminDreamPage />} />
           <Route
             path="/specialCheckoutPage"
             element={<SpecialCheckoutPage />}
