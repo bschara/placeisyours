@@ -8,13 +8,16 @@ const DreamPage = () => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://theplaceisyours.club/api/answers/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ answer }),
-      });
+      const response = await fetch(
+        "https://theplaceisyours.club/api/answers/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ answer }),
+        }
+      );
 
       if (response.ok) {
         alert("answer received!");

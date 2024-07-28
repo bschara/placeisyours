@@ -14,7 +14,7 @@
 
 //   useEffect(() => {
 //     axios
-//       .get("http://theplaceisyours.club/api/items/itemById", {
+//       .get("https://theplaceisyours.club/api/items/itemById", {
 //         params: { id: id },
 //       })
 //       .then((response) => {
@@ -52,7 +52,7 @@
 //       <h2>{item.itemName}</h2>
 //       <img
 //         className="selected-image"
-//         src={`http://theplaceisyours.club/${getFileName(selectedImage)}`}
+//         src={`https://theplaceisyours.club/${getFileName(selectedImage)}`}
 //         alt={item.itemName}
 //       />
 //       <p>
@@ -72,7 +72,7 @@
 //         {[item.mainImage, ...(item.images || [])].map((imagePath, index) => (
 //           <img
 //             key={index}
-//             src={`http://theplaceisyours.club/${getFileName(imagePath)}`}
+//             src={`https://theplaceisyours.club/${getFileName(imagePath)}`}
 //             alt={`${item.itemName} additional ${index + 1}`}
 //             onClick={() => handleImageClick(imagePath)}
 //             className="thumbnail-image"
@@ -103,7 +103,7 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://theplaceisyours.club/api/items/itemById/${id}`)
+      .get(`https://theplaceisyours.club/api/items/itemById/${id}`)
       .then((response) => {
         console.log(response.data);
         const itemData = response.data;

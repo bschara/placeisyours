@@ -18,9 +18,9 @@ const ItemsComponent = () => {
   }, [currentPage, selectedCategory]);
 
   const fetchItems = (page, category) => {
-    let url = `http://theplaceisyours.club/api/items?page=${page}`;
+    let url = `https://theplaceisyours.club/api/items?page=${page}`;
     if (category) {
-      url = `http://theplaceisyours.club/api/items/${category}?page=${page}`;
+      url = `https://theplaceisyours.club/api/items/${category}?page=${page}`;
     }
     axios
       .get(url)
@@ -49,7 +49,7 @@ const ItemsComponent = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://theplaceisyours.club/api/items/${id}`, {
+      .delete(`https://theplaceisyours.club/api/items/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -65,7 +65,7 @@ const ItemsComponent = () => {
   const handleChangeStatus = (id) => {
     axios
       .put(
-        `http://theplaceisyours.club/api/items/updateItemStatus/${id}`,
+        `https://theplaceisyours.club/api/items/updateItemStatus/${id}`,
         {},
         {
           headers: {

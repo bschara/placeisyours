@@ -44,7 +44,7 @@
 //     console.log(formData.values);
 //     try {
 //       const response = await axios.post(
-//         "http://theplaceisyours.club/api/items/",
+//         "https://theplaceisyours.club/api/items/",
 //         formData,
 //         {
 //           headers: {
@@ -189,7 +189,7 @@ const PostItemsComponent = () => {
     try {
       console.log(formData);
       const response = await axios.post(
-        "http://theplaceisyours.club/api/items/",
+        "https://theplaceisyours.club/api/items/",
         formData,
         {
           headers: {

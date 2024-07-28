@@ -15,7 +15,7 @@ const AdminDreamPage = () => {
       navigate("/login");
     } else {
       axios
-        .get("http://theplaceisyours.club/api/answers", {
+        .get("https://theplaceisyours.club/api/answers", {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((response) => {

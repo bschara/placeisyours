@@ -24,7 +24,7 @@ const SpecialCheckoutPage = () => {
       if (itemId) {
         try {
           const response = await axios.get(
-            `http://theplaceisyours.club/api/items/findSpecialItemById/${itemId}`
+            `https://theplaceisyours.club/api/items/findSpecialItemById/${itemId}`
           );
           console.log(response.data);
           setItem(response.data);
@@ -53,7 +53,7 @@ const SpecialCheckoutPage = () => {
     if (item) {
       try {
         await axios.post(
-          `http://theplaceisyours.club/api/orders/specialOrder`,
+          `https://theplaceisyours.club/api/orders/specialOrder`,
           {
             itemName: item.itemName,
             category: item.category,

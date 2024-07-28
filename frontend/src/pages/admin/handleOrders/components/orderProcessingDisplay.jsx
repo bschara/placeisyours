@@ -18,7 +18,7 @@ const OrderProcessingDisplay = () => {
 
     axios
       .get(
-        "http://theplaceisyours.club/api/orders/ordersPendingPayment",
+        "https://theplaceisyours.club/api/orders/ordersPendingPayment",
         config
       )
       .then((response) => {
@@ -30,7 +30,7 @@ const OrderProcessingDisplay = () => {
 
     axios
       .get(
-        "http://theplaceisyours.club/api/orders/ordersPendingProcessing",
+        "https://theplaceisyours.club/api/orders/ordersPendingProcessing",
         config
       )
       .then((response) => {
@@ -41,7 +41,7 @@ const OrderProcessingDisplay = () => {
       });
     axios
       .get(
-        "http://theplaceisyours.club/api/orders/specialOrdersPendingPayment",
+        "https://theplaceisyours.club/api/orders/specialOrdersPendingPayment",
         config
       )
       .then((response) => {
@@ -53,7 +53,7 @@ const OrderProcessingDisplay = () => {
 
     axios
       .get(
-        "http://theplaceisyours.club/api/orders/specialOrdersPendingProcessing",
+        "https://theplaceisyours.club/api/orders/specialOrdersPendingProcessing",
         config
       )
       .then((response) => {

@@ -40,7 +40,7 @@ const HomePage = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "http://theplaceisyours.club/api/mailingList/",
+        "https://theplaceisyours.club/api/mailingList/",
         {
           method: "POST",
           headers: {

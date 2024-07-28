@@ -16,7 +16,7 @@
 
 //   const fetchItems = (page) => {
 //     axios
-//       .get(`http://theplaceisyours.club/api/items?page=${page}`)
+//       .get(`https://theplaceisyours.club/api/items?page=${page}`)
 //       .then((response) => {
 //         const { items, totalPages } = response.data;
 //         setItems(items);
@@ -95,9 +95,9 @@ const ItemsComponent = () => {
   }, [currentPage, selectedCategory]);
 
   const fetchItems = (page, category) => {
-    let url = `http://theplaceisyours.club/api/items?page=${page}`;
+    let url = `https://theplaceisyours.club/api/items?page=${page}`;
     if (category) {
-      url = `http://theplaceisyours.club/api/items/${category}?page=${page}`;
+      url = `https://theplaceisyours.club/api/items/${category}?page=${page}`;
     }
     axios
       .get(url)

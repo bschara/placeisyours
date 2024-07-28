@@ -14,7 +14,7 @@
 
 //   useEffect(() => {
 //     axios
-//       .get(`http://theplaceisyours.club/api/items/findSpecialItem`)
+//       .get(`https://theplaceisyours.club/api/items/findSpecialItem`)
 //       .then((response) => {
 //         console.log(response.data);
 //         const itemData = response.data;
@@ -118,7 +118,7 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     axios
-      .get(`http://theplaceisyours.club/api/items/findSpecialItem`)
+      .get(`https://theplaceisyours.club/api/items/findSpecialItem`)
       .then((response) => {
         console.log(response.data);
         const itemData = response.data;

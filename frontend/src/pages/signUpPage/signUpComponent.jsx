@@ -21,7 +21,7 @@ const SignUpComponent = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://theplaceisyours.club/api/users/",
+        "https://theplaceisyours.club/api/users/",
         formData
       );
       console.log("Form submitted successfully:", response.data);

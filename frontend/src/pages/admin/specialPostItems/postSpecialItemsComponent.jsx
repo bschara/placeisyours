@@ -57,7 +57,7 @@ const PostSpecialItemsComponent = () => {
     try {
       console.log(formData);
       const response = await axios.post(
-        "http://theplaceisyours.club/api/items/createSpecialItem",
+        "https://theplaceisyours.club/api/items/createSpecialItem",
         formData,
         {
           headers: {
