@@ -4,7 +4,7 @@ const { type } = require("os");
 module.exports = (mongoose) => {
   const Orders = mongoose.Schema(
     {
-      id: {
+      ID: {
         type: String,
         required: true,
         unique: true,

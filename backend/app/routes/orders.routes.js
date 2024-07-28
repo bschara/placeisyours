@@ -1,4 +1,4 @@
-const createOrderLimiter = require("../middleware/limiter");
+const { createOrderLimiter } = require("../middleware/limiter");
 const verifyToken = require("../middleware/token-middlware");
 
 module.exports = (app) => {
@@ -34,12 +34,36 @@ module.exports = (app) => {
     orders.findOrdersPendingPayment
   );
 
+  router.get(
+    "/specialOrdersPendingProcessing",
+    verifyToken,
+    orders.findSpecialOrdersPendingProcessing
+  );
+
+  router.get(
+    "/specialOrdersPendingPayment",
+    verifyToken,
+    orders.findSpecialOrdersPendingPayment
+  );
+
   router.put("/handlePendingPayment", verifyToken, orders.handlePendingPayment);
 
   router.put(
     "/handlePendingProcessing",
     verifyToken,
     orders.handlePendingProcessing
+  );
+
+  router.put(
+    "/handleSpecialPendingPayment",
+    verifyToken,
+    orders.handleSpecialPendingPayment
+  );
+
+  router.put(
+    "/handleSpecialPendingProcessing",
+    verifyToken,
+    orders.handleSpecialPendingProcessing
   );
 
   router.put("/handleCancelOrder", verifyToken, orders.handleCancel);

@@ -1,7 +1,8 @@
 const db = require("../models");
 const Order = db.orders;
 const Item = db.items;
-const specialOrder = db.specialOrder;
+const SpecialOrder = db.specialOrder;
+const sItem = db.sItem;
 const uuid = require("uuid");
 const mongoose = require("mongoose");
 const axios = require("axios");
@@ -86,7 +87,7 @@ exports.create = async (req, res) => {
     const id = uuid.v4();
 
     const order = new Order({
-      id: id,
+      ID: id,
       itemName: req.body.itemName,
       category: req.body.category,
       mainImage: req.body.mainImage,
@@ -101,7 +102,11 @@ exports.create = async (req, res) => {
     await order.save({ session });
 
     const itemId = req.body.itemID;
-    await Item.findByIdAndUpdate(itemId, { status: "sold" }, { session });
+    await Item.findOneAndUpdate(
+      { ID: itemId },
+      { status: "sold" },
+      { session }
+    );
 
     await session.commitTransaction();
     session.endSession();
@@ -128,7 +133,7 @@ exports.createSpecialItem = async (req, res) => {
     !req.body.buyerFullName ||
     !req.body.buyerLocation ||
     !req.body.itemID ||
-    !req.body.size
+    !req.body.itemSize
   ) {
     return res.status(400).send({ message: "All fields are required!" });
   }
@@ -146,8 +151,8 @@ exports.createSpecialItem = async (req, res) => {
   try {
     const id = uuid.v4();
 
-    const order = new specialOrder({
-      id: id,
+    const order = new SpecialOrder({
+      ID: id,
       itemName: req.body.itemName,
       category: req.body.category,
       mainImage: req.body.mainImage,
@@ -157,17 +162,15 @@ exports.createSpecialItem = async (req, res) => {
       buyerLocation: req.body.buyerLocation,
       itemPrice: req.body.itemPrice,
       itemID: req.body.itemID,
-      itemSize: req.body.size,
+      itemSize: req.body.itemSize,
     });
 
     await order.save({ session });
 
     const itemId = req.body.itemID;
-    const size = req.body.size;
+    const size = req.body.itemSize;
 
-    const specialItem = await specialItem
-      .findOne({ ID: itemId })
-      .session(session);
+    const specialItem = await sItem.findOne({ ID: itemId }).session(session);
 
     if (!specialItem) {
       await session.abortTransaction();
@@ -278,6 +281,34 @@ exports.findOrdersPendingPayment = (req, res) => {
 
 exports.findOrdersPendingProcessing = (req, res) => {
   Order.find({ status: "pending_processing" })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while retrieving orders pending processing.",
+      });
+    });
+};
+
+exports.findSpecialOrdersPendingPayment = (req, res) => {
+  SpecialOrder.find({ status: "pending_payment" })
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message ||
+          "Some error occurred while retrieving orders pending payment.",
+      });
+    });
+};
+
+exports.findSpecialOrdersPendingProcessing = (req, res) => {
+  SpecialOrder.find({ status: "pending_processing" })
     .then((data) => {
       res.send(data);
     })
@@ -407,6 +438,50 @@ exports.handlePendingProcessing = (req, res) => {
     });
 };
 
+exports.handleSpecialPendingPayment = (req, res) => {
+  const itemID = req.body.itemID;
+
+  SpecialOrder.findOneAndUpdate(
+    { itemID: itemID },
+    { status: "completed" },
+    { useFindAndModify: false, new: true }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
+        });
+      } else res.send({ message: "Order status updated to completed." });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Order with itemID=" + itemID,
+      });
+    });
+};
+
+exports.handleSpecialPendingProcessing = (req, res) => {
+  const itemID = req.body.itemID;
+
+  SpecialOrder.findOneAndUpdate(
+    { itemID: itemID },
+    { status: "pending_payment" },
+    { useFindAndModify: false, new: true }
+  )
+    .then((data) => {
+      if (!data) {
+        res.status(404).send({
+          message: `Cannot update Order with itemID=${itemID}. Maybe Order was not found!`,
+        });
+      } else res.send({ message: "Order status updated to pending_payement." });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: "Error updating Order with itemID=" + itemID,
+      });
+    });
+};
+
 // exports.handleCancel = (req, res) => {
 //   const itemID = req.body.itemID;
 
@@ -452,7 +527,7 @@ exports.handleCancel = async (req, res) => {
     }
 
     const itemUpdate = await Item.findOneAndUpdate(
-      { _id: itemID },
+      { ID: itemID },
       { status: "available" },
       { useFindAndModify: false, new: true, session }
     );
@@ -484,7 +559,8 @@ exports.handleCancel = async (req, res) => {
 
 exports.handleSpecialCancel = async (req, res) => {
   const itemID = req.body.itemID;
-  const itemSize = req.body.itemSize; // Ensure this is passed in the request body
+  const itemSize = req.body.itemSize;
+  console.log("item size:  ", itemSize); // Ensure this is passed in the request body
 
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -506,7 +582,7 @@ exports.handleSpecialCancel = async (req, res) => {
     }
 
     // Find the item and update its quantity
-    const item = await SpecialItem.findOne({ ID: itemID }).session(session);
+    const item = await sItem.findOne({ ID: itemID }).session(session);
 
     if (!item) {
       await session.abortTransaction();

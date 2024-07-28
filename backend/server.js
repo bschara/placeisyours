@@ -25,6 +25,7 @@ require("./app/routes/users.routes")(app);
 require("./app/routes/orders.routes")(app);
 require("./app/routes/items.routes")(app);
 require("./app/routes/mailing_list.routes")(app);
+require("./app/routes/answers.routes")(app);
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, "0.0.0.0", () => {

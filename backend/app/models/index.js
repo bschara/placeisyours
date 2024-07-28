@@ -11,6 +11,7 @@ db.orders = require("./orders.model.js")(mongoose);
 db.items = require("./items.model.js")(mongoose);
 db.mailing_list = require("./mailingList.model.js")(mongoose);
 db.sItem = require("./sItem.model.js")(mongoose);
-db.specialOrder = require("./specialOrders.model.js");
+db.specialOrder = require("./specialOrders.model.js")(mongoose);
+db.answers = require("./answers.model.js")(mongoose);
 
 module.exports = db;
