@@ -26,7 +26,7 @@ const SpecialCheckoutPage = () => {
           const response = await axios.get(
             `https://theplaceisyours.club/api/items/findSpecialItemById/${itemId}`
           );
-          console.log(response.data);
+          // console.log(response.data);
           setItem(response.data);
           setCost(response.data.price);
         } catch (error) {

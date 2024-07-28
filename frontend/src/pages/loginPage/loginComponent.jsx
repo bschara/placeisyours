@@ -21,7 +21,7 @@ const LoginComponent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted with data:", formData);
+    // console.log("Form submitted with data:", formData);
 
     try {
       const response = await axios.post(

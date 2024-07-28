@@ -114,16 +114,16 @@ const ItemDetailPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   useEffect(() => {
     axios
       .get(`https://theplaceisyours.club/api/items/findSpecialItem`)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         const itemData = response.data;
         setItem(itemData);
-        console.log(itemData);
+        // console.log(itemData);
         setSelectedImage(itemData.mainImageUrl);
       })
       .catch((error) => {
