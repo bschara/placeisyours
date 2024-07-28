@@ -17,7 +17,10 @@ const OrderProcessingDisplay = () => {
     };
 
     axios
-      .get("http://192.168.1.9:8081/api/orders/ordersPendingPayment", config)
+      .get(
+        "http://theplaceisyours.club/api/orders/ordersPendingPayment",
+        config
+      )
       .then((response) => {
         setPendingPaymentOrders(response.data);
       })
@@ -26,7 +29,10 @@ const OrderProcessingDisplay = () => {
       });
 
     axios
-      .get("http://192.168.1.9:8081/api/orders/ordersPendingProcessing", config)
+      .get(
+        "http://theplaceisyours.club/api/orders/ordersPendingProcessing",
+        config
+      )
       .then((response) => {
         setPendingProcessingOrders(response.data);
       })
@@ -35,7 +41,7 @@ const OrderProcessingDisplay = () => {
       });
     axios
       .get(
-        "http://192.168.1.9:8081/api/orders/specialOrdersPendingPayment",
+        "http://theplaceisyours.club/api/orders/specialOrdersPendingPayment",
         config
       )
       .then((response) => {
@@ -47,7 +53,7 @@ const OrderProcessingDisplay = () => {
 
     axios
       .get(
-        "http://192.168.1.9:8081/api/orders/specialOrdersPendingProcessing",
+        "http://theplaceisyours.club/api/orders/specialOrdersPendingProcessing",
         config
       )
       .then((response) => {

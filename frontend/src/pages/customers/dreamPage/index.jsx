@@ -8,7 +8,7 @@ const DreamPage = () => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://192.168.1.9:8081/api/answers/", {
+      const response = await fetch("http://theplaceisyours.club/api/answers/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

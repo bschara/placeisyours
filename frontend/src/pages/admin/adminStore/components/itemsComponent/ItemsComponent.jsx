@@ -18,9 +18,9 @@ const ItemsComponent = () => {
   }, [currentPage, selectedCategory]);
 
   const fetchItems = (page, category) => {
-    let url = `http://192.168.1.9:8081/api/items?page=${page}`;
+    let url = `http://theplaceisyours.club/api/items?page=${page}`;
     if (category) {
-      url = `http://192.168.1.9:8081/api/items/${category}?page=${page}`;
+      url = `http://theplaceisyours.club/api/items/${category}?page=${page}`;
     }
     axios
       .get(url)
@@ -49,7 +49,7 @@ const ItemsComponent = () => {
 
   const handleDelete = (id) => {
     axios
-      .delete(`http://192.168.1.9:8081/api/items/${id}`, {
+      .delete(`http://theplaceisyours.club/api/items/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -65,7 +65,7 @@ const ItemsComponent = () => {
   const handleChangeStatus = (id) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/items/updateItemStatus/${id}`,
+        `http://theplaceisyours.club/api/items/updateItemStatus/${id}`,
         {},
         {
           headers: {

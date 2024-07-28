@@ -57,7 +57,7 @@ const PostSpecialItemsComponent = () => {
     try {
       console.log(formData);
       const response = await axios.post(
-        "http://192.168.1.9:8081/api/items/createSpecialItem",
+        "http://theplaceisyours.club/api/items/createSpecialItem",
         formData,
         {
           headers: {

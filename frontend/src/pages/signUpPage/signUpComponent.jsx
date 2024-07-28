@@ -21,7 +21,7 @@ const SignUpComponent = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://192.168.1.9:8081/api/users/",
+        "http://theplaceisyours.club/api/users/",
         formData
       );
       console.log("Form submitted successfully:", response.data);

@@ -25,7 +25,7 @@ const LoginComponent = () => {
 
     try {
       const response = await axios.post(
-        "http://192.168.1.9:8081/api/users/login",
+        "http://theplaceisyours.club/api/users/login",
         formData
       );
 

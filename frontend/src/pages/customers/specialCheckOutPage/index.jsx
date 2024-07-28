@@ -24,7 +24,7 @@ const SpecialCheckoutPage = () => {
       if (itemId) {
         try {
           const response = await axios.get(
-            `http://192.168.1.9:8081/api/items/findSpecialItemById/${itemId}`
+            `http://theplaceisyours.club/api/items/findSpecialItemById/${itemId}`
           );
           console.log(response.data);
           setItem(response.data);
@@ -52,19 +52,22 @@ const SpecialCheckoutPage = () => {
 
     if (item) {
       try {
-        await axios.post(`http://192.168.1.9:8081/api/orders/specialOrder`, {
-          itemName: item.itemName,
-          category: item.category,
-          mainImage: item.mainImage,
-          buyerEmail: buyerEmail,
-          buyerPhoneNumber: buyerPhoneNumber,
-          buyerFullName: buyerFullName,
-          buyerLocation: buyerLocation,
-          itemPrice: item.price,
-          itemID: item.ID,
-          itemSize: size,
-          recaptchaToken: recaptchaToken,
-        });
+        await axios.post(
+          `http://theplaceisyours.club/api/orders/specialOrder`,
+          {
+            itemName: item.itemName,
+            category: item.category,
+            mainImage: item.mainImage,
+            buyerEmail: buyerEmail,
+            buyerPhoneNumber: buyerPhoneNumber,
+            buyerFullName: buyerFullName,
+            buyerLocation: buyerLocation,
+            itemPrice: item.price,
+            itemID: item.ID,
+            itemSize: size,
+            recaptchaToken: recaptchaToken,
+          }
+        );
 
         alert("Thank you for your order!");
       } catch (error) {

@@ -39,13 +39,16 @@ const HomePage = () => {
   const handleSubscribe = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://192.168.1.9:8081/api/mailingList/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
+      const response = await fetch(
+        "http://theplaceisyours.club/api/mailingList/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
 
       if (response.ok) {
         setMessage("Successfully subscribed!");

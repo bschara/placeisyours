@@ -32,7 +32,7 @@ const CheckoutPage = () => {
         const fetchedItems = await Promise.all(
           allItemIds.map(async (itemId) => {
             const response = await axios.get(
-              `http://192.168.1.9:8081/api/items/itemById/${itemId}`
+              `http://theplaceisyours.club/api/items/itemById/${itemId}`
             );
             return response.data;
           })
@@ -67,7 +67,7 @@ const CheckoutPage = () => {
       await Promise.all(
         items.map(async (item) => {
           console.log(item.ID);
-          await axios.post(`http://192.168.1.9:8081/api/orders`, {
+          await axios.post(`http://theplaceisyours.club/api/orders`, {
             itemName: item.itemName,
             category: item.category,
             mainImage: item.mainImage,

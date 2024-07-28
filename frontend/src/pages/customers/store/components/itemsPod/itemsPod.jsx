@@ -12,7 +12,7 @@
 //       <div className="item-pod">
 //         <img
 //           img
-//           src={`http://192.168.1.9:8081/${fileName}`}
+//           src={`http://theplaceisyours.club/${fileName}`}
 //           alt={item.itemName}
 //         />
 //         <p>Price: ${item.price}</p>

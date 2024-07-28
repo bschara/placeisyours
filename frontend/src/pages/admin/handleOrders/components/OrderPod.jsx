@@ -94,7 +94,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handleDeleteOrder = (itemID) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handleCancelOrder`,
+        `http://theplaceisyours.club/api/orders/handleCancelOrder`,
         { itemID: itemID },
         config
       )
@@ -109,7 +109,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handleSpecialDeleteOrder = (itemID, itemSize) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handleSpecialCancelOrder`,
+        `http://theplaceisyours.club/api/orders/handleSpecialCancelOrder`,
         { itemID: itemID, itemSize: itemSize },
         config
       )
@@ -143,7 +143,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handlePlaceOrderProc = (itemID) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handlePendingProcessing`,
+        `http://theplaceisyours.club/api/orders/handlePendingProcessing`,
         {
           itemID: itemID,
         },
@@ -160,7 +160,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handlePlaceOrderPay = (itemID) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handlePendingPayment`,
+        `http://theplaceisyours.club/api/orders/handlePendingPayment`,
         {
           itemID: itemID,
         },
@@ -177,7 +177,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handleSpecialPlaceOrderProc = (itemID) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handleSpecialPendingProcessing`,
+        `http://theplaceisyours.club/api/orders/handleSpecialPendingProcessing`,
         {
           itemID: itemID,
         },
@@ -194,7 +194,7 @@ const OrderPod = ({ title, orders, onDeleteSelected, onPlaceOrders }) => {
   const handleSpecialPlaceOrderPay = (itemID) => {
     axios
       .put(
-        `http://192.168.1.9:8081/api/orders/handleSpecialPendingPayment`,
+        `http://theplaceisyours.club/api/orders/handleSpecialPendingPayment`,
         {
           itemID: itemID,
         },
